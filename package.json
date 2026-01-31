@@ -1,0 +1,20 @@
+
+{
+  "name": "campus-master-po",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "pnpm": ">=6.35.1",
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "build:admin": "turbo run build --filter=admin",
+    "build:teacher": "turbo run build --filter=teacher-portal",
+    "build:student": "turbo run build --filter=student-portal",
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=teacher-portal...",
+  "devCommand": "cd ../.. && pnpm turbo run dev --filter=teacher-portal",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}

@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=admin...",
+  "devCommand": "cd ../.. && pnpm turbo run dev --filter=admin",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
