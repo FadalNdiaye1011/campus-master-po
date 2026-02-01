@@ -25,7 +25,7 @@ const getAppUrls = () => {
     // URLs locales pour développement
     return {
         auth: 'http://localhost:3000',
-        admin: 'http://localhost:3001',
+        admin: 'https://campus-master-po-admin.vercel.app',
         student: 'http://localhost:3003',
         teacher: 'http://localhost:3002',
     };
