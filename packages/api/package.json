@@ -10,6 +10,10 @@
       "require": "./src/index.ts"
     }
   },
+  "devDependencies": {
+    "typescript": "^5",
+    "@repo/typescript-config": "workspace:*"
+  },
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"

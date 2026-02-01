@@ -1,11 +1,10 @@
-
 {
   "name": "campus-master-po",
   "private": true,
   "packageManager": "pnpm@9.12.3",
   "engines": {
     "pnpm": ">=6.35.1",
-    "node": ">=18"
+    "node": "20.x"
   },
   "scripts": {
     "build": "turbo run build",
