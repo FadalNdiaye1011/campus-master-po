@@ -1,9 +1,9 @@
 {
   "name": "campus-master-po",
   "private": true,
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@8.15.0",
   "engines": {
-    "pnpm": ">=6.35.1",
+    "pnpm": ">=8.0.0",
     "node": "20.x"
   },
   "scripts": {
