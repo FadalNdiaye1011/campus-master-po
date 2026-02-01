@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install --no-frozen-lockfile --prefer-offline",
-  "buildCommand": "pnpm run build",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
   "nodeVersion": "20.x"
 }
