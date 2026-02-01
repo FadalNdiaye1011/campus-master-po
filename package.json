@@ -1,18 +1,33 @@
 {
-  "name": "campus-master-po",
+  "name": "admin",
+  "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@8.15.0",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "build": "turbo run build",
-    "build:admin": "turbo run build --filter=admin",
-    "build:teacher": "turbo run build --filter=teacher-portal",
-    "build:student": "turbo run build --filter=student-portal",
-    "dev": "turbo run dev"
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.1.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@repo/api": "workspace:*",
+    "@repo/auth": "workspace:*",
+    "lucide-react": "^0.263.1"
   },
   "devDependencies": {
-    "turbo": "^2.3.3"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "tailwindcss": "^4",
+    "eslint": "^8",
+    "eslint-config-next": "15.1.3"
   }
 }
