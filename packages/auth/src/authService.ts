@@ -10,24 +10,27 @@ const API_CONFIG = {
 
 // Configuration des URLs par environnement
 const getAppUrls = () => {
-    const isProduction = process.env.NODE_ENV === 'production';
+    // Détection basée sur l'hostname au lieu de NODE_ENV
+    const isLocal = typeof window !== 'undefined' &&
+        (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1');
 
-    if (isProduction) {
-        // URLs de production Vercel
+    if (isLocal) {
+        // URLs locales pour développement
         return {
-            auth: process.env.NEXT_PUBLIC_AUTH_URL || 'https://campus-master-po-auth.vercel.app',
-            admin: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://campus-master-po-admin.vercel.app',
-            student: process.env.NEXT_PUBLIC_STUDENT_URL || 'https://campus-master-po-student-portal.vercel.app',
-            teacher: process.env.NEXT_PUBLIC_TEACHER_URL || 'https://campus-master-po-teacher-portal.vercel.app',
+            auth: 'http://localhost:3000',
+            admin: 'http://localhost:3001',
+            student: 'http://localhost:3003',
+            teacher: 'http://localhost:3002',
         };
     }
 
-    // URLs locales pour développement
+    // URLs de production Vercel
     return {
-        auth: 'http://localhost:3000',
-        admin: 'https://campus-master-po-admin.vercel.app',
-        student: 'http://localhost:3003',
-        teacher: 'http://localhost:3002',
+        auth: process.env.NEXT_PUBLIC_AUTH_URL || 'https://campus-master-po-auth.vercel.app',
+        admin: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://campus-master-po-admin.vercel.app',
+        student: process.env.NEXT_PUBLIC_STUDENT_URL || 'https://campus-master-po-student-portal.vercel.app',
+        teacher: process.env.NEXT_PUBLIC_TEACHER_URL || 'https://campus-master-po-teacher-portal.vercel.app',
     };
 };
 
