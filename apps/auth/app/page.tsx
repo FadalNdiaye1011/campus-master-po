@@ -45,35 +45,12 @@ export default function LoginPage() {
 
       const { user, token } = response;
 
-      // Sauvegarder le token dans localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('auth_token', token);
-        localStorage.setItem('auth_user', JSON.stringify(user));
-      }
+      // Sauvegarder dans localStorage via AuthService
+      AuthService.saveUserToLocalStorage(user, token);
 
-      // Encoder les données utilisateur pour l'URL
-      const userData = encodeURIComponent(JSON.stringify({ ...user, token }));
-
-      // Déterminer l'URL de redirection selon le rôle
-      let redirectUrl: string;
-      switch (user.role) {
-        case 'admin':
-          redirectUrl = `http://localhost:3001?auth=${userData}`;
-          break;
-        case 'professor':
-          redirectUrl = `http://localhost:3002?auth=${userData}`;
-          break;
-        case 'student':
-          redirectUrl = `http://localhost:3003?auth=${userData}`;
-          break;
-        default:
-          throw new Error(`Rôle inconnu: ${user.role}`);
-      }
-
-      console.log(`🔀 Redirection vers ${user.role}:`, redirectUrl);
-
-      // Redirection vers le portail approprié
-      window.location.href = redirectUrl;
+      // Rediriger vers le bon portail (gère automatiquement dev vs prod)
+      console.log(`🔀 Redirection vers ${user.role}`);
+      AuthService.redirectToRoleApp(user.role);
 
     } catch (err: any) {
       console.error('❌ Erreur de connexion:', err);
@@ -238,15 +215,15 @@ export default function LoginPage() {
         </div>
 
         <style jsx>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-        }
-        .animate-shake {
-          animation: shake 0.3s ease-in-out;
-        }
-      `}</style>
+          @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+          }
+          .animate-shake {
+            animation: shake 0.3s ease-in-out;
+          }
+        `}</style>
       </div>
   );
 }
