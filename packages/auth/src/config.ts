@@ -22,6 +22,7 @@ export const getApiConfigFromEnv = (): ApiConfig => {
     const baseUrl = typeof window !== 'undefined'
         ? (window as any).NEXT_PUBLIC_API_URL
         : DEFAULT_BASE_URL;
+    console.log(baseUrl)
 
     return createApiConfig(baseUrl);
 };
