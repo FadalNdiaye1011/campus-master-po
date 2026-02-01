@@ -8,6 +8,29 @@ const API_CONFIG = {
     },
 };
 
+// Configuration des URLs par environnement
+const getAppUrls = () => {
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if (isProduction) {
+        // URLs de production Vercel
+        return {
+            auth: process.env.NEXT_PUBLIC_AUTH_URL || 'https://campus-master-po-auth.vercel.app',
+            admin: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://campus-master-po-admin.vercel.app',
+            student: process.env.NEXT_PUBLIC_STUDENT_URL || 'https://campus-master-po-student-portal.vercel.app',
+            teacher: process.env.NEXT_PUBLIC_TEACHER_URL || 'https://campus-master-po-teacher-portal.vercel.app',
+        };
+    }
+
+    // URLs locales pour développement
+    return {
+        auth: 'http://localhost:3000',
+        admin: 'http://localhost:3001',
+        student: 'http://localhost:3003',
+        teacher: 'http://localhost:3002',
+    };
+};
+
 export class AuthService extends ParentService {
     private static instance: AuthService;
 
@@ -122,7 +145,49 @@ export class AuthService extends ParentService {
         }
     }
 
+    /**
+     * Retourne l'URL de l'app selon le rôle (production ou dev)
+     */
+    static getUrlForRole(role: string): string {
+        const urls = getAppUrls();
+
+        switch (role) {
+            case 'admin':
+                return urls.admin;
+            case 'student':
+                return urls.student;
+            case 'professor':
+            case 'teacher':
+                return urls.teacher;
+            default:
+                return urls.auth;
+        }
+    }
+
+    /**
+     * Redirige vers l'app appropriée selon le rôle
+     */
+    static redirectToRoleApp(role: string): void {
+        if (typeof window === 'undefined') return;
+
+        const url = this.getUrlForRole(role);
+        const user = this.getCurrentUser();
+        const token = this.getToken();
+
+        // Construire l'URL avec les données d'authentification
+        const authData = encodeURIComponent(JSON.stringify({
+            user,
+            token
+        }));
+
+        window.location.href = `${url}?auth=${authData}`;
+    }
+
+    /**
+     * @deprecated Utiliser getUrlForRole() à la place
+     */
     static getPortForRole(role: string): number {
+        console.warn('⚠️ getPortForRole est déprécié, utilisez getUrlForRole()');
         switch (role) {
             case 'admin':
                 return 3001;

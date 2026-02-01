@@ -18,15 +18,16 @@ export function useAdminAuth() {
 
             if (!currentUser) {
                 console.log('❌ Admin - Pas d\'utilisateur, redirection vers login');
-                window.location.href = 'http://localhost:3000';
+                // Utiliser getUrlForRole au lieu de localhost hardcodé
+                const authUrl = AuthService.getUrlForRole('default');
+                window.location.href = authUrl;
                 return;
             }
 
-            // Utiliser getRedirectPath pour rediriger vers le bon portail
+            // Vérifier le rôle et rediriger si nécessaire
             if (currentUser.role !== 'admin') {
                 console.log(`⚠️ Admin - Utilisateur est ${currentUser.role}, redirection vers son portail`);
-                // const redirectUrl = AuthService.getRedirectPath(currentUser);
-                // window.location.href = redirectUrl;
+                AuthService.redirectToRoleApp(currentUser.role);
                 return;
             }
 
