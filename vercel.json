@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install",
+  "installCommand": "npm install -g pnpm@9.12.3 && pnpm install --no-frozen-lockfile --registry https://registry.npmjs.org/",
   "buildCommand": "pnpm run build",
   "nodeVersion": "20.x"
 }
