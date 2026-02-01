@@ -1,5 +1,0 @@
-cat > .vercelrc << 'EOF'
-{
-  "installCommand": "corepack enable && corepack prepare pnpm@9.12.3 --activate && pnpm install --no-frozen-lockfile"
-}
-EOF
