@@ -128,10 +128,10 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
     }, [onClose]);
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
                 <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white">
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-xl font-bold text-gray-900">
                         {user ? 'Modifier utilisateur' : 'Nouvel utilisateur'}
                     </h2>
                     <button
@@ -152,32 +152,32 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium mb-2">Prénom *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Prénom *</label>
                             <input
                                 type="text"
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium mb-2">Nom *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Nom *</label>
                             <input
                                 type="text"
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                             />
                         </div>
                     </div>
 
                     {!user && (
                         <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Nom d'utilisateur *
                             </label>
                             <input
@@ -186,13 +186,13 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                                 value={formData.username}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                             />
                         </div>
                     )}
 
                     <div>
-                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                         <input
                             type="email"
                             name="email"
@@ -200,13 +200,13 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                             onChange={handleChange}
                             required
                             disabled={!!user}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 text-gray-900"
                         />
                     </div>
 
                     {!user && (
                         <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Mot de passe *
                             </label>
                             <input
@@ -216,32 +216,32 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                                 onChange={handleChange}
                                 required={!user}
                                 minLength={6}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                                 placeholder="Minimum 6 caractères"
                             />
                         </div>
                     )}
 
                     <div>
-                        <label className="block text-sm font-medium mb-2">Téléphone *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Téléphone *</label>
                         <input
                             type="tel"
                             name="phoneNumber"
                             value={formData.phoneNumber}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium mb-2">Rôle *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Rôle *</label>
                             <select
                                 name="role"
                                 value={formData.role}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                             >
                                 <option value="STUDENT">Étudiant</option>
                                 <option value="PROFESSOR">Enseignant</option>
@@ -249,12 +249,12 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium mb-2">Statut *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Statut *</label>
                             <select
                                 name="status"
                                 value={formData.status}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                             >
                                 <option value="ACTIVE">Actif</option>
                                 <option value="INACTIVE">Inactif</option>
@@ -266,7 +266,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                     {!user && formData.role === 'STUDENT' && (
                         <>
                             <div>
-                                <label className="block text-sm font-medium mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Département {departments.length > 0 && '*'}
                                 </label>
                                 {loadingDepartments ? (
@@ -280,7 +280,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                                         value={formData.departementId}
                                         onChange={handleChange}
                                         required={formData.role === 'STUDENT'}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                                     >
                                         <option value="">Sélectionnez un département</option>
                                         {departments.map((dept) => (
@@ -299,7 +299,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Numéro étudiant
                                 </label>
                                 <input
@@ -307,13 +307,13 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                                     name="numeroEtudiant"
                                     value={formData.numeroEtudiant}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                                     placeholder="Ex: 202400001"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Spécialisation
                                 </label>
                                 <input
@@ -321,7 +321,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                                     name="specialisation"
                                     value={formData.specialisation}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                                     placeholder="Ex: Développement Web"
                                 />
                             </div>
@@ -349,7 +349,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onClose, onSuccess }) => {
                             type="button"
                             onClick={onClose}
                             disabled={loading}
-                            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+                            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 text-gray-700"
                         >
                             Annuler
                         </button>

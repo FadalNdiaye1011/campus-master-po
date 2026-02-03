@@ -14,11 +14,11 @@ export function useAdminAuth() {
                 AuthService.getUserFromUrl() ||
                 AuthService.getCurrentUser();
 
-            console.log('🔍 Student - Vérification auth:', currentUser);
 
             if (!currentUser) {
-                console.log('❌ student - Pas d\'utilisateur, redirection vers login');
-                window.location.href = 'http://localhost:3000';
+
+                const authUrl = AuthService.getUrlForRole('default');
+                window.location.href = authUrl;
                 return;
             }
 

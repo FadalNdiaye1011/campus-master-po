@@ -111,7 +111,7 @@ export default function LoginPage() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none bg-gray-50 hover:bg-white"
+                      className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="admin@school.com"
                   />
                 </div>
@@ -135,7 +135,7 @@ export default function LoginPage() {
                       required
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none bg-gray-50 hover:bg-white"
+                      className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="••••••••"
                   />
                   <button
@@ -188,21 +188,21 @@ export default function LoginPage() {
 
               {/* Demo credentials */}
               <div className="pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-500 mb-3 font-medium">Identifiants de test :</p>
+                <p className="text-xs text-gray-600 mb-3 font-medium">Identifiants de test :</p>
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 rounded-lg border border-blue-100">
                     <span className="font-semibold text-blue-700 min-w-[70px]">Admin:</span>
-                    <span className="text-gray-600">admin@school.com</span>
+                    <span className="text-gray-700">admin@school.com</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-lg border border-green-100">
                     <span className="font-semibold text-green-700 min-w-[70px]">Étudiant:</span>
-                    <span className="text-gray-600">student@school.com</span>
+                    <span className="text-gray-700">student@school.com</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 bg-purple-50 rounded-lg border border-purple-100">
                     <span className="font-semibold text-purple-700 min-w-[70px]">Enseignant:</span>
-                    <span className="text-gray-600">teacher@school.com</span>
+                    <span className="text-gray-700">teacher@school.com</span>
                   </div>
-                  <p className="text-gray-500 italic pt-1">Mot de passe: password123</p>
+                  <p className="text-gray-600 italic pt-1">Mot de passe: password123</p>
                 </div>
               </div>
             </form>

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Home, Users, BookOpen, Calendar, BarChart3, Settings, LogOut,
     X, ChevronRight, Building
 } from 'lucide-react';
 import { MenuItem } from '../../types';
-import {AuthService} from "@repo/auth/src";
+import { AuthService } from "@repo/auth/src";
 
 interface SidebarProps {
     currentPage: string;
@@ -13,29 +13,65 @@ interface SidebarProps {
     setIsMobileOpen: (open: boolean) => void;
 }
 
+interface UserData {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+}
+
 const Sidebar: React.FC<SidebarProps> = ({
                                              currentPage,
                                              setCurrentPage,
                                              isMobileOpen,
                                              setIsMobileOpen
                                          }) => {
+    const [user, setUser] = useState<UserData | null>(null);
+
+    useEffect(() => {
+        // Récupérer les données utilisateur depuis localStorage
+        const authUserStr = localStorage.getItem('auth_user');
+        if (authUserStr) {
+            try {
+                const userData = JSON.parse(authUserStr);
+                setUser(userData);
+                console.log('👤 Utilisateur chargé dans Sidebar:', userData);
+            } catch (error) {
+                console.error('❌ Erreur parsing auth_user:', error);
+            }
+        }
+    }, []);
+
     const menuItems: MenuItem[] = [
         { id: 'dashboard', label: 'Tableau de bord', icon: Home },
         { id: 'users', label: 'Utilisateurs', icon: Users },
         // { id: 'courses', label: 'Cours', icon: BookOpen },
         { id: 'modules', label: 'Modules', icon: BookOpen },
-        { id: 'matieres', label: 'Matieres', icon: BookOpen },
+        { id: 'matieres', label: 'Matières', icon: BookOpen },
         { id: 'departments', label: 'Départements', icon: Building },
         { id: 'semesters', label: 'Semestres', icon: Calendar },
         { id: 'statistics', label: 'Statistiques', icon: BarChart3 },
         { id: 'settings', label: 'Paramètres', icon: Settings },
     ];
 
-    const user = AuthService.getCurrentUser();
-      const handleLogout = () => {
-        AuthService.logout();
+    const handleLogout = () => {
+        // Supprimer les données d'authentification
+        localStorage.removeItem('auth_user');
+        localStorage.removeItem('auth_token');
+
+        // Rediriger vers la page de connexion
         window.location.href = 'http://localhost:3000';
-      };
+    };
+
+    // Fonction pour obtenir les initiales
+    const getInitials = (name: string): string => {
+        if (!name) return 'U';
+        const parts = name.trim().split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
 
     return (
         <>
@@ -85,16 +121,34 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </nav>
 
                 <div className="absolute bottom-0 w-full p-6 border-t border-blue-700">
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg">
-                            A
+                    {user && (
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                                {getInitials(user.name)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-semibold truncate">{user.name}</div>
+                                <div className="text-sm text-blue-200 truncate">{user.email}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div className="font-semibold">Admin</div>
-                            <div className="text-sm text-blue-200">admin@campus.sn</div>
+                    )}
+
+                    {!user && (
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg">
+                                <Users size={24} />
+                            </div>
+                            <div className="flex-1">
+                                <div className="font-semibold">Chargement...</div>
+                                <div className="text-sm text-blue-200">En cours</div>
+                            </div>
                         </div>
-                    </div>
-                    <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-600 rounded-lg transition">
+                    )}
+
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-600 rounded-lg transition transform hover:scale-105"
+                    >
                         <LogOut size={18} />
                         <span>Déconnexion</span>
                     </button>

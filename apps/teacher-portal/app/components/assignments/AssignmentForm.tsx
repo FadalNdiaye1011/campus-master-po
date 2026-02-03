@@ -115,10 +115,10 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
     }, [onClose]);
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white">
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-xl font-bold text-gray-900">
                         {assignment ? 'Modifier le devoir' : 'Créer un devoir'}
                     </h2>
                     <button
@@ -126,7 +126,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
                         className="p-2 hover:bg-gray-100 rounded-lg transition"
                         aria-label="Fermer"
                     >
-                        <X size={24} />
+                        <X size={24} className="text-gray-600" />
                     </button>
                 </div>
 
@@ -144,19 +144,20 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
                         </div>
                     )}
 
+                    {/* Cours */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Cours *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Cours *</label>
                         <select
                             name="coursId"
                             value={formData.coursId}
                             onChange={handleChange}
                             required
                             disabled={loadingCourses}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:text-gray-500 appearance-none cursor-pointer"
                         >
-                            <option value="">Sélectionnez un cours</option>
+                            <option value="" className="text-gray-400">Sélectionnez un cours</option>
                             {courses.map((course) => (
-                                <option key={course.id} value={course.id}>
+                                <option key={course.id} value={course.id} className="text-gray-900">
                                     {course.titre}
                                 </option>
                             ))}
@@ -168,44 +169,48 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
                         )}
                     </div>
 
+                    {/* Titre du devoir */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Titre du devoir *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Titre du devoir *</label>
                         <input
                             type="text"
                             name="titre"
                             value={formData.titre}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-400 bg-white"
                             placeholder="Ex: TP Final"
                         />
                     </div>
 
+                    {/* Consignes */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Consignes *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Consignes *</label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
                             required
                             rows={4}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900 placeholder-gray-400 bg-white"
                             placeholder="Instructions pour les étudiants..."
                         />
                     </div>
 
+                    {/* Date limite */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Date limite *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Date limite *</label>
                         <input
                             type="date"
                             name="dateLimite"
                             value={formData.dateLimite}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white cursor-pointer"
                         />
                     </div>
 
+                    {/* Boutons */}
                     <div className="flex gap-3 pt-4">
                         <button
                             type="submit"
@@ -214,9 +219,9 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
                         >
                             {loading ? (
                                 <span className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                     {assignment ? 'Modification...' : 'Création...'}
-                </span>
+                                </span>
                             ) : assignment ? (
                                 'Mettre à jour'
                             ) : (
@@ -227,7 +232,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ assignment, onClose, on
                             type="button"
                             onClick={onClose}
                             disabled={loading}
-                            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+                            className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50"
                         >
                             Annuler
                         </button>

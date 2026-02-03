@@ -16,11 +16,13 @@ export function useTeacherAuth() {
 
             console.log('🔍 teacher - Vérification auth:', currentUser);
 
+
             if (!currentUser) {
-                console.log('❌ teacher - Pas d\'utilisateur, redirection vers login');
-                window.location.href = 'http://localhost:3000';
+                const authUrl = AuthService.getUrlForRole('default');
+                window.location.href = authUrl;
                 return;
             }
+
 
             // Utiliser getRedirectPath pour rediriger vers le bon portail
             if (currentUser.role !== 'professor') {

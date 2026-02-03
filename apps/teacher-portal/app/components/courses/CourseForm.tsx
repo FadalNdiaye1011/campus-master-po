@@ -113,10 +113,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
     }, [onClose]);
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white">
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-xl font-bold text-gray-900">
                         {course ? 'Modifier le cours' : 'Créer un cours'}
                     </h2>
                     <button
@@ -124,7 +124,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
                         className="p-2 hover:bg-gray-100 rounded-lg transition"
                         aria-label="Fermer"
                     >
-                        <X size={24} />
+                        <X size={24} className="text-gray-600" />
                     </button>
                 </div>
 
@@ -142,59 +142,62 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
                         </div>
                     )}
 
+                    {/* Titre du cours */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Titre du cours *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Titre du cours *</label>
                         <input
                             type="text"
                             name="titre"
                             value={formData.titre}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-400 bg-white"
                             placeholder="Ex: Analyse de données"
                         />
                     </div>
 
+                    {/* Description */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Description *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
                             required
                             rows={4}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900 placeholder-gray-400 bg-white"
                             placeholder="Description du cours..."
                         />
                     </div>
 
+                    {/* Semestre + Département */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium mb-2">Semestre *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Semestre *</label>
                             <input
                                 type="text"
                                 name="semestre"
                                 value={formData.semestre}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-400 bg-white"
                                 placeholder="Ex: S1 2024-2025"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-2">Département *</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Département *</label>
                             <select
                                 name="departementId"
                                 value={formData.departementId}
                                 onChange={handleChange}
                                 required
                                 disabled={loadingDepartments}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:text-gray-500 appearance-none cursor-pointer"
                             >
-                                <option value="">Sélectionnez un département</option>
+                                <option value="" className="text-gray-400">Sélectionnez un département</option>
                                 {departments.map((dept) => (
-                                    <option key={dept.id} value={dept.id}>
+                                    <option key={dept.id} value={dept.id} className="text-gray-900">
                                         {dept.libelle}
                                     </option>
                                 ))}
@@ -207,6 +210,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
                         </div>
                     </div>
 
+                    {/* Boutons */}
                     <div className="flex gap-3 pt-4">
                         <button
                             type="submit"
@@ -215,9 +219,9 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
                         >
                             {loading ? (
                                 <span className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                     {course ? 'Modification...' : 'Création...'}
-                </span>
+                                </span>
                             ) : course ? (
                                 'Mettre à jour'
                             ) : (
@@ -228,7 +232,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ course, onClose, onSuccess }) =
                             type="button"
                             onClick={onClose}
                             disabled={loading}
-                            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+                            className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50"
                         >
                             Annuler
                         </button>

@@ -1,11 +1,10 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Home, Users, BookOpen, Calendar, BarChart3, Settings, LogOut,
     X, ChevronRight, Building
 } from 'lucide-react';
 import { MenuItem } from '../../types';
-import {AuthService} from "@repo/auth/src";
+import { AuthService } from "@repo/auth/src";
 
 interface SidebarProps {
     currentPage: string;
@@ -14,22 +13,70 @@ interface SidebarProps {
     setIsMobileOpen: (open: boolean) => void;
 }
 
+interface UserData {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+}
+
 const Sidebar: React.FC<SidebarProps> = ({
                                              currentPage,
                                              setCurrentPage,
                                              isMobileOpen,
                                              setIsMobileOpen
                                          }) => {
+    const [user, setUser] = useState<UserData | null>(null);
+
+    useEffect(() => {
+        // Récupérer les données utilisateur depuis localStorage
+        const authUserStr = localStorage.getItem('auth_user');
+        if (authUserStr) {
+            try {
+                const userData = JSON.parse(authUserStr);
+                setUser(userData);
+                console.log('👤 Utilisateur étudiant chargé:', userData);
+            } catch (error) {
+                console.error('❌ Erreur parsing auth_user:', error);
+            }
+        }
+    }, []);
+
     const menuItems: MenuItem[] = [
         { id: 'courses', label: 'Cours', icon: BookOpen },
         { id: 'assignments', label: 'Devoirs', icon: BookOpen },
-        
     ];
 
-    const user = AuthService.getCurrentUser();
     const handleLogout = () => {
-        AuthService.logout();
+        // Supprimer les données d'authentification
+        localStorage.removeItem('auth_user');
+        localStorage.removeItem('auth_token');
+
+        // Rediriger vers la page de connexion
         window.location.href = 'http://localhost:3000';
+    };
+
+    // Fonction pour obtenir les initiales
+    const getInitials = (name: string): string => {
+        if (!name) return 'U';
+        const parts = name.trim().split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
+
+    // Fonction pour traduire le rôle
+    const getRoleLabel = (role: string): string => {
+        const roleMap: { [key: string]: string } = {
+            'admin': 'Administrateur',
+            'student': 'Étudiant',
+            'professor': 'Enseignant',
+            'ADMIN': 'Administrateur',
+            'STUDENT': 'Étudiant',
+            'PROFESSOR': 'Enseignant',
+        };
+        return roleMap[role] || 'Étudiant';
     };
 
     return (
@@ -45,7 +92,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <div className="p-6 border-b border-blue-700 flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight">CampusMaster</h1>
-                        <p className="text-blue-200 text-sm mt-1">Etudiant</p>
+                        <p className="text-blue-200 text-sm mt-1">
+                            {user ? getRoleLabel(user.role) : 'Étudiant'}
+                        </p>
                     </div>
                     <button
                         onClick={() => setIsMobileOpen(false)}
@@ -80,16 +129,34 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </nav>
 
                 <div className="absolute bottom-0 w-full p-6 border-t border-blue-700">
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg">
-                            A
+                    {user && (
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                                {getInitials(user.name)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-semibold truncate">{user.name}</div>
+                                <div className="text-sm text-blue-200 truncate">{user.email}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div className="font-semibold">Etudiant</div>
-                            <div className="text-sm text-blue-200">etudiant@campus.sn</div>
+                    )}
+
+                    {!user && (
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-white text-blue-900 rounded-full flex items-center justify-center font-bold text-lg">
+                                <Users size={24} />
+                            </div>
+                            <div className="flex-1">
+                                <div className="font-semibold">Chargement...</div>
+                                <div className="text-sm text-blue-200">En cours</div>
+                            </div>
                         </div>
-                    </div>
-                    <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-600 rounded-lg transition">
+                    )}
+
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-600 rounded-lg transition transform hover:scale-105"
+                    >
                         <LogOut size={18} />
                         <span>Déconnexion</span>
                     </button>

@@ -25,7 +25,7 @@ const getAppUrls = () => {
         };
     }
 
-    // URLs de production Vercel
+    // URLs de production Vercel 
     return {
         auth: process.env.NEXT_PUBLIC_AUTH_URL || 'https://campus-master-po-auth.vercel.app',
         admin: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://campus-master-po-admin.vercel.app',
